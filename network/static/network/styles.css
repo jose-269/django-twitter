@@ -1,0 +1,118 @@
+:root {
+  --net-black: #1B1B1B;
+  --net-darkBlue: #081430;
+  --net-midBlue: #182649;
+  --net-lightBlue: #3F4E74;
+  --net-lighterBlue: #5F6D8E
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.main-wrapper {
+  background-color: var(--net-darkBlue);
+  color: #fff;
+  display: grid;
+  grid-template-columns: [first] 250px [line2] 24px [line3] auto [line4] 250px;
+  grid-template-rows: [row1-start] 50px [row1-end row2-start] auto;
+  min-height: 100vh;
+  height: 100%;
+}
+.network-nav {
+  grid-row-start: row2-start;
+}
+
+.body {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: row2-start;
+}
+#mainPost, .edit-post-textarea {
+  background-color: var(--darkBlue);
+  border: 1px solid var(--net-lightBlue);
+  color: #fff;
+}
+.edit-post-textarea:focus {
+  background-color: var(--darkBlue);
+  color: #fff;
+}
+#mainPost::placeholder {
+  color: #fff;
+}
+.nav-link {
+  color: #fff;
+}
+
+#postBtn, .editPostBtn {
+  background-color: var(--net-lighterBlue);
+  color: #fff;
+  border-radius: 20px;
+  min-width: 100px;
+  font-weight: bold;
+  font-size: 17px;
+}
+.username-text, .date-info {
+  color: var(--net-lighterBlue);
+  font-size: 0.95rem;
+}
+.post-wrapper {
+  border-bottom: 1px solid var(--net-lighterBlue);
+}
+.like-heart {
+  color: red
+}
+
+.profile-link {
+  color:#fff;
+}
+
+.profile-link:hover {
+  color: var(--net-lighterBlue);
+  text-decoration: none;
+}
+.profile-username {
+  font-size: 32px;
+}
+.profile-nickname {
+  font-size: 1rem;
+  color: var(--net-lighterBlue);
+}
+.profile-btn {
+  background-color: var(--net-lighterBlue);
+  color: #fff;
+  border-radius: 20px;
+  min-width: 100px;
+  font-weight: bold;
+  font-size: 16px;
+  height: 42px;
+}
+
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+  color: var(--net-lighterBlue);
+}
+
+.social-length {
+  font-size: 14px;
+  color: #abaed7;
+  font-weight: bold;
+}
+
+.btn-pagination {
+  background-color: var(--net-lighterBlue);
+  color: #fff;
+  margin: 0 2px;
+}
+
+.btn-pagination:hover {
+  background-color: var(--net-midBlue);
+  color: #fff;
+  margin: 0 2px;
+  text-decoration: none;
+}
+
+.pointer {
+  cursor: pointer;
+}

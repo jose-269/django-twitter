@@ -1,0 +1,133 @@
+{% extends "network/layout.html" %} {% load static %} {% block body %}
+
+<div class="container-md">
+  <div class="row">
+    <div class="col-12">
+      <div class="mb-3">
+        <form action="{% url 'network:post' %}" method="post">
+          {% csrf_token %}
+          <textarea
+            class="form-control text-white"
+            id="mainPost"
+            rows="3"
+            placeholder="What are you thinking? &#129300;"
+          ></textarea>
+          <button
+            type="button"
+            class="btn d-block ml-auto mt-4"
+            id="postBtn"
+            data-url="{% url 'network:post' %}"
+          >
+            Post
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="currentPosted"></div>
+
+  <div class="row no-gutters" id="postRow">
+    {% for post in posts %}
+    <div class="col-12 post-wrapper my-4">
+      <div class="d-flex justify-content-between">
+        <div>
+          <a
+            href="{% url 'network:profile' post.user.username  %}"
+            class="mr-2 font-weight-bold profile-link"
+            >{{ post.user.nickname }}</a
+          >
+          <span class="username-text">@{{ post.user.username }}</span>
+        </div>
+        <span class="date-info">{{ post.timestamp}}</span>
+      </div>
+      <p class="mt-3" id="edit_{{post.id}}">{{ post.newPost }}</p>
+      <div id="editContent{{post.id}}" class="d-none mt-2">
+        <div class="d-flex justify-content-end">
+          <i
+            class="fa-solid fa-circle-xmark mb-2 pointer closeEdit"
+            data-post="{{post.id}}"
+          ></i>
+        </div>
+        <textarea
+          class="form-control edit-post-textarea"
+          id="textArea{{post.id}}"
+          rows="3"
+        ></textarea>
+
+        <button
+          type="button"
+          class="btn d-block ml-auto mt-4 editPostBtn"
+          data-post="{{post.id}}"
+        >
+          save
+        </button>
+      </div>
+      <p>{{user }}</p>
+
+      <i
+        class="fa-solid fa-heart like-heart mr-1 addedLike pointer removeLike {% if user in post.liking_users.all %} d-inline-block {% else %} d-none {% endif %}"
+        id="removeLike-{{post.id}}"
+        data-user="{{user.username}}"
+        data-post="{{post.id}}"
+      ></i>
+      {% if user.is_authenticated %}
+      <i
+        class="fa-regular fa-heart like-heart mr-1 pointer addLike {% if user not in post.liking_users.all %} d-inline-block {% else %} d-none {% endif %}"
+        id="addLike-{{post.id}}"
+        data-user="{{user.username}}"
+        data-post="{{post.id}}"
+      ></i>
+
+      {% else %}
+      <i class="fa-regular fa-heart like-heart mr-1"></i>
+
+      {% endif %}
+
+      <span class="mr-3" id="nPost-{{post.id}}"
+        >{{ post.liking_users.count }}</span
+      >
+      <i
+        class="fa-regular fa-pen-to-square pointer editPost"
+        data-post="{{post.id}}"
+      ></i>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="row">
+    <div class="col-12 text-center pb-5">
+      <div class="pagination my-5 justify-content-center">
+        <span class="step-links">
+          <div class="d-flex">
+            {% if posts.has_previous %}
+            <a class="btn-pagination p-2 rounded" href="?page=1"
+              >&laquo; first</a
+            >
+            <a
+              class="btn-pagination p-2 rounded"
+              href="?page={{ posts.previous_page_number }}"
+              >previous</a
+            >
+            {% endif %} {% if posts.has_next %}
+            <a
+              class="btn-pagination p-2 rounded"
+              href="?page={{ posts.next_page_number }}"
+              >next</a
+            >
+            <a
+              class="btn-pagination p-2 rounded"
+              href="?page={{ posts.paginator.num_pages }}"
+              >last &raquo;</a
+            >
+            {% endif %}
+          </div>
+          <span class="current mt-2 d-block">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{% static 'network/network.js' %}"></script>
+{% endblock %}
